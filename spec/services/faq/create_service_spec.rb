@@ -6,7 +6,7 @@ describe FaqModule::CreateService do
 
     @question = FFaker::Lorem.sentence
     @answer = FFaker::Lorem.sentence
-    @hashtag = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
+    @hashtags = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
   end
 
   describe '#call' do
@@ -34,6 +34,9 @@ describe FaqModule::CreateService do
 
     it "With valid params, hashtags are created" do
       @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
+      puts @hashtags
+      puts Hashtag.first.name
+      puts Hashtag.last.name
 
       response = @createService.call()
       expect(@hashtags.split(/[\s,]+/).first).to match(Hashtag.first.name)
