@@ -17,7 +17,7 @@ services:
       - '.:/bot'
     volumes_from:
       - box
-    envirnoment:
+    environment:
       - LANG=C.UTF-8
 
   box:

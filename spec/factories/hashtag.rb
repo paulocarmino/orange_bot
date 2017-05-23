@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :faq do
+  factory :hashtag do
     name FFaker::Lorem.word
     company
   end
