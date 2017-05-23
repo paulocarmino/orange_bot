@@ -17,6 +17,8 @@ services:
       - '.:/bot'
     volumes_from:
       - box
+    envirnoment:
+      - LANG=C.UTF-8
 
   box:
     image: busybox
