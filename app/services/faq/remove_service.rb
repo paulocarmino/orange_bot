@@ -7,10 +7,14 @@ module FaqModule
     end
 
     def call
-      faq = @company.faqs.where(id: @id).last
-      return "Questão inválida, verifique o id" if faq == nil
+      begin
+        faq = @company.faqs.find(@id)
+      rescue
+        return "Questão inválida, verifique o id"
+      end
 
       Faq.transaction do
+        # Deleta as hashtags associadas que não estejam associadas a outros faqs
           faq.hashtags.each do |h|
             if h.faqs.count <= 1
               h.delete
