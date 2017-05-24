@@ -11,21 +11,21 @@ describe FaqModule::CreateService do
 
   describe '#call' do
     it "Without hashtag params, will receive a error" do
-      @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer})
 
       response = @createService.call()
       expect(response).to match("Hashtag Obrigatória")
     end
 
     it "With valid params, receive success message" do
-      @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
 
       response = @createService.call()
       expect(response).to match("Criado com Sucesso")
     end
 
     it "With valid params, find question and answer in database" do
-      @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
 
       response = @createService.call()
       expect(Faq.last.question).to match(@question)
@@ -33,10 +33,7 @@ describe FaqModule::CreateService do
     end
 
     it "With valid params, hashtags are created" do
-      @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
-      puts @hashtags
-      puts Hashtag.first.name
-      puts Hashtag.last.name
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
 
       response = @createService.call()
       expect(@hashtags.split(/[\s,]+/).first).to match(Hashtag.first.name)

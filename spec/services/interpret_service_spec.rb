@@ -45,7 +45,7 @@ describe InterpretService do
 
   describe '#search by category' do
     it "With invalid hashtag, return don't find message" do
-      response = InterpretService.call('search_by_hashtag', {"query" => '')
+      response = InterpretService.call('search_by_hashtag', {"query" => ''})
       expect(response).to match("Nada encontrado")
     end
 
@@ -65,27 +65,27 @@ describe InterpretService do
     before do
       @question = FFaker::Lorem.sentence
       @answer = FFaker::Lorem.sentence
-      @hashtag = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
+      @hashtags = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
     end
 
     it "Without hashtag params, will receive a error" do
-      response = InterpretService.call('create', {"question.original" => @question, "answer.original" => @answer})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer})
       expect(response).to match("Hashtag Obrigatória")
     end
 
     it "With valid params, receive success message" do
-      response = InterpretService.call('create', {"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
       expect(response).to match("Criado com Sucesso")
     end
 
     it "With valid params, find question and answer in database" do
-      response = InterpretService.call('create', {"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
       expect(Faq.last.question).to match(@question)
       expect(Faq.last.answer).to match(@answer)
     end
 
     it "With valid params, hashtags are created" do
-      response = InterpretService.call('create', {"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
       expect(@hashtags.split(/[\s,]+/).first).to match(Hashtag.first.name)
       expect(@hashtags.split(/[\s,]+/).last).to match(Hashtag.last.name)
     end
@@ -93,6 +93,7 @@ describe InterpretService do
 
   describe '#remove' do
     it "With valid ID, remove Faq" do
+      faq = create(:faq, company: @company)
       response = InterpretService.call('remove', {"id" => faq.id})
       expect(response).to match("Deletado com sucesso")
     end

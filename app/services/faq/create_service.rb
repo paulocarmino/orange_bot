@@ -8,15 +8,18 @@ module FaqModule
     end
 
     def call
-      Faq.transaction do
-        faq = Faq.create(question: @question, answer: @answer, company: @company)
-        return "Hashtag Obrigatória" if @hashtags == nil
-        @hashtags.split().each do |hashtag|
-          faq.hashtags << Hashtag.create(name: hashtag)
+      return 'Hashtag Obrigatória' if @hashtags == nil || @hashtags == ''
+      begin
+        Faq.transaction do
+          faq = Faq.create(question: @question, answer: @answer, company: @company)
+          @hashtags.split(/[\s,]+/).each do |hashtag|
+            faq.hashtags << Hashtag.create(name: hashtag)
+          end
         end
+        "Criado com Sucesso"
+      rescue
+        "Problemas na criação"
       end
-      "Criado com Sucesso"
     end
-
   end
 end
