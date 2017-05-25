@@ -14,7 +14,6 @@ module FaqModule
       end
 
       info_draw = {
-        "slack": {
             "text": "Aqui estão as informações do faq #13",
             "attachments": [
                 {
@@ -29,9 +28,10 @@ module FaqModule
                             "value": "",
                         }
                     ]
-            }
-        }
+                }
+            ]
       }
+
 
       JSON.pretty_generate(info_draw)
 
