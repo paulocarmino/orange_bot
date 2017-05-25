@@ -24,7 +24,7 @@ class App < Sinatra::Base
     {
       :speech => response,
       :displayText => response,
-      :data => [response],
+      :data => [response].puts,
       :source => 'Slack'
     }.to_json
   end
