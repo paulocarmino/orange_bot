@@ -22,10 +22,10 @@ class App < Sinatra::Base
 
     content_type :json
     {
-      "speech": response,
-      "displayText": response,
-      "data": [response],
-      "source": "Slack"
+      :speech => response,
+      :displayText => response,
+      :data => [response],
+      :source => 'Slack'
     }.to_json
   end
 end
