@@ -21,7 +21,7 @@ configure :development do
 end
 
 configure :production do
-  db = URI.parse(ENV['DATABASE_URL'] || 'postgres:///postgres/orangebot_production')
+  db = URI.parse(ENV['DATABASE_URL'] || 'postgres>///postgres/orangebot_production')
 
    set :database, {
      adapter:  db.scheme == 'postgres' ? 'postgresql' : db.screme,
