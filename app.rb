@@ -20,11 +20,31 @@ class App < Sinatra::Base
       response = InterpretService.call(result["action"], result["parameters"])
     end
 
+    if result["action"] = "info" do
+      slackResponse = JSON.parse(response)
+    else
+      slackResponse = response
+    end
+
     content_type :json
     {
       "speech": response,
       "displayText": response,
-      "data": response,
+      "data": slackResponse,
+      "source": "Slack"
+    }.to_json
+  end
+
+  get '/debug' do
+    response = InterpretService.call("info", "2")
+
+    slackResponse = JSON.parse(response)
+
+    content_type :json
+    {
+      "speech": response,
+      "displayText": response,
+      "data": slackResponse,
       "source": "Slack"
     }.to_json
   end

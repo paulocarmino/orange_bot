@@ -2,8 +2,7 @@ module FaqModule
   class InfoService
     def initialize(params)
       @company = Company.last
-      @params = params
-      @id = params["id"]
+      @id = params
     end
 
     def call
