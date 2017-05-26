@@ -2,7 +2,7 @@ module FaqModule
   class InfoService
     def initialize(params)
       @company = Company.last
-      @id = params
+      @id = params["id"]
     end
 
     def call
@@ -13,39 +13,24 @@ module FaqModule
       end
 
       info_draw = {
-          "text": "Aqui estão as informações do faq #13",
-          "attachments": [
-              {
-                "title": "#{faq.question}",
-                  "fields": [
-                      {
-                          "title": "Resposta",
-                          "value": "#{faq.answer}"
-                      },
-                      {
-                          "title": "Hashtags",
-                          "value": "",
-                      }
-                  ]
-          },
-          {
-            "title": "Opções",
-            "actions": [
-                  {
-                      "name": "press",
-                      "text": "Editar questão",
-                      "type": "button",
-                      "value": "pressed"
-                  },
-            {
-                      "name": "press",
-                      "text": "Deletar Questão",
-                      "type": "button",
-              "style": "danger",
-                      "value": "pressed"
+        "slack": {
+            "text": "Aqui estão as informações do faq #13",
+            "attachments": [
+                {
+                  "title": "#{faq.question}",
+                    "fields": [
+                        {
+                            "title": "Resposta",
+                            "value": "#{faq.answer}"
+                        },
+                        {
+                            "title": "Hashtags",
+                            "value": "",
+                        }
+                    ]
                   }
-              ]
-          }]
+            ]
+        }
       }
 
       JSON.pretty_generate(info_draw)
