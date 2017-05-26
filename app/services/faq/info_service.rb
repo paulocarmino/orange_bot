@@ -2,8 +2,7 @@ module FaqModule
   class InfoService
     def initialize(params)
       @company = Company.last
-      @params = params
-      @id = params["id"]
+      @id = params
     end
 
     def call
@@ -29,7 +28,7 @@ module FaqModule
                             "value": "",
                         }
                     ]
-                }
+                  }
             ]
         }
       }
@@ -37,5 +36,6 @@ module FaqModule
       JSON.pretty_generate(info_draw)
 
     end
+
   end
 end

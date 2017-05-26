@@ -1,7 +1,6 @@
 require 'json'
 require 'sinatra'
 require 'sinatra/activerecord'
-require 'pry'
 
 require './config/database'
 
@@ -13,7 +12,7 @@ class App < Sinatra::Base
     'Hello world!'
   end
 
-  post '/webhook' do
+  get '/webhook' do
     result = JSON.parse(request.body.read)["result"]
     if result["contexts"].present?
       response = InterpretService.call(result["action"], result["contexts"][0]["parameters"])
@@ -21,26 +20,11 @@ class App < Sinatra::Base
       response = InterpretService.call(result["action"], result["parameters"])
     end
 
-    responseToSlack = JSON.parse(response)
-
     content_type :json
     {
       :speech => response,
       :displayText => response,
-      :data => responseToSlack,
-      :source => 'Slack'
-    }.to_json
-  end
-
-  get '/webhook2' do
-
-    responseInfo = InterpretService.call("info", "2")
-
-    response = JSON.parse(responseInfo);
-
-    {
-      :speech => response,
-      :displayText => response,
+      :data => [response],
       :source => 'Slack'
     }.to_json
   end
